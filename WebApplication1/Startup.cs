@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
@@ -36,15 +33,12 @@ namespace WebApplication1
             // Add framework services.
             services.AddMvc();
 
-
             var builder = new ContainerBuilder();
 
             builder.RegisterAssemblyTypes(typeof(UserService).GetTypeInfo().Assembly)
                 .Where(t => t.Name.EndsWith("Service") || t.Name.EndsWith("Repo"))
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
-
-
 
             builder.Populate(services);
             this.ApplicationContainer = builder.Build();

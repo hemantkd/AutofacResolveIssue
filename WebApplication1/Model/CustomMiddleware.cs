@@ -7,17 +7,15 @@ namespace WebApplication1.Model
     public class CustomMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly IUserService _userService;
 
-        public CustomMiddleware(RequestDelegate next, IUserService userService)
+        public CustomMiddleware(RequestDelegate next)
         {
             _next = next;
-            _userService = userService;
         }
 
-        public async Task Invoke(HttpContext context)
+        public async Task Invoke(HttpContext context, IUserService userService)
         {
-            _userService.Name = "Testing 123 name";
+            userService.Name = "Testing 123 name";
 
             await _next.Invoke(context);
         }
